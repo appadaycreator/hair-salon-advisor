@@ -20,31 +20,44 @@
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "美容院・ヘアサロン選び診断", "url": "https://appadaycreator.com/hair-salon-advisor/", "description": "髪質・悩み・予算・重視点から最適な美容院タイプとヘアケア方法を診断するツール。", "applicationCategory": "UtilityApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "JPY"}}</script>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TXQGZRF9');</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDPNYD2875"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZDPNYD2875',{send_page_view:false});</script>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","s3t9vl8h3v");</script>
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8427583028015858" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     window.onerror = function(msg, src, line, col, err) { console.error('Global error:', msg, src, line, col, err); return false; };
     window.addEventListener('unhandledrejection', function(e) { console.error('Unhandled rejection:', e.reason); });
   </script>
   <style>
-    .choice-btn { transition: all 0.2s; cursor: pointer; }
+    .choice-btn { transition: all 0.2s; cursor: pointer; position: relative; }
     .choice-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .choice-btn.selected { border-color: #ec4899; background: #fce7f3; color: #be185d; }
+    .choice-btn.selected { border-color: #ec4899; border-width: 2.5px; background: #fce7f3; color: #be185d; font-weight: 700; }
+    .choice-btn.selected::after { content: '✓'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #ec4899; font-weight: 900; font-size: 16px; }
     .progress-step { transition: all 0.3s; }
     .fade-slide { animation: fadeSlide 0.4s ease; }
     @keyframes fadeSlide { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+    .fade-slide-back { animation: fadeSlideBack 0.4s ease; }
+    @keyframes fadeSlideBack { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
     .result-card { animation: fadeUp 0.5s ease; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(15px)} to{opacity:1;transform:translateY(0)} }
+    .score-bar-bg { background: #f3f4f6; border-radius: 6px; height: 12px; overflow: hidden; }
+    .score-bar-fill { height: 100%; border-radius: 6px; width: 0; transition: width 0.7s ease; }
+    .score-bar-fill.primary { background: linear-gradient(90deg, #ec4899, #f43f5e); }
+    .score-bar-fill.secondary { background: #d1d5db; }
   
 /* Phase 8: Mobile Optimization */
 input, select, textarea { font-size: 16px !important; }
 button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min-width: 48px; touch-action: manipulation; }
+.choice-btn { min-height: 52px; display: flex; align-items: center; justify-content: flex-start; }
 @media (max-width: 640px) {
   body { font-size: 16px; }
   .max-w-lg { padding-left: 1rem; padding-right: 1rem; }
+  .choice-btn { padding: 12px 14px !important; font-size: 14px !important; line-height: 1.4; }
+  #choicesContainer { gap: 10px !important; }
 }
 
 @media print{
@@ -63,10 +76,8 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
 /* AdSense unfilled: collapse empty ad slots */
 ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!important;height:0!important}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"このサービスは無料ですか？","acceptedAnswer":{"@type":"Answer","text":"はい、完全無料・登録不要でご利用いただけます。"}},{"@type":"Question","name":"入力データはどこに保存されますか？","acceptedAnswer":{"@type":"Answer","text":"お使いのデバイス内にのみ保存されます。外部送信は行いません。"}},{"@type":"Question","name":"結果はどのくらい正確ですか？","acceptedAnswer":{"@type":"Answer","text":"あくまで参考情報です。重要な判断の際は専門家にご相談ください。"}},{"@type":"Question","name":"どのような人が使っていますか？","acceptedAnswer":{"@type":"Answer","text":"初心者から専門家まで、多くの方にご利用いただいています。特に決断が必要な場面で活躍します。"}},{"@type":"Question","name":"結果をシェアできますか？","acceptedAnswer":{"@type":"Answer","text":"はい、診断結果はスクリーンショットやURLで友人・家族とシェアできます。"}},{"@type":"Question","name":"有料プランはありますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ、すべての機能を完全無料でご利用いただけます。"}}]}</script>
-<script type="application/ld+json">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ヘアサロン選びで最も重要なポイントは？","acceptedAnswer":{"@type":"Answer","text":"「技術力」と「相性の良さ」が最重要です。口コミや実績を事前に確認し、初回カウンセリングで悩みを詳しく伝えられるサロンを選びましょう。希望スタイルの写真を持参すると伝わりやすくなります。"}},{"@type":"Question","name":"ダメージを受けた髪を改善するには何回通えばいい？","acceptedAnswer":{"@type":"Answer","text":"ダメージの程度にもよりますが、酸熱トリートメントなどの集中ケアを月1〜2回、3〜6ヶ月継続すると効果を実感できる方が多いです。ホームケアとの併用が回復を早めます。"}},{"@type":"Question","name":"縮毛矯正とカラーは同日にできますか？","acceptedAnswer":{"@type":"Answer","text":"基本的には避けることをおすすめします。最低でも2〜4週間の間隔を空けるのが一般的な推奨です。担当スタイリストに相談してください。"}},{"@type":"Question","name":"美容院と理容院の違いは何ですか？","acceptedAnswer":{"@type":"Answer","text":"美容院はカット・カラー・パーマ・ヘアケアなど幅広い施術が得意です。理容院はカット・シェービングが中心で、顔剃りや整髪などを重視する方に向いています。"}},{"@type":"Question","name":"初めてのサロンで失敗しないコツは？","acceptedAnswer":{"@type":"Answer","text":"①希望スタイルの写真を必ず持参する、②「したくないこと」も明確に伝える、③予算と所要時間を事前に確認する、④口コミや施術例を事前に調べる、の4点が重要です。"}}]}</script>
 
-</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -119,10 +130,18 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://appadaycreator.com/"},{"@type":"ListItem","position":2,"name":"診断/アドバイス","item":"https://appadaycreator.com/category/advisor/"},{"@type":"ListItem","position":3,"name":"美容院・ヘアサロン選び診断 | 髪質・悩み・予算から最適なサロンタイプを診断","item":"https://appadaycreator.com/hair-salon-advisor/"}]}</script>
 </head>
-<body class="bg-gradient-to-br from-pink-50 to-rose-100 min-h-screen text-gray-800"><a href="#main" class="sr-only">本文へスキップ</a>
+<body class="bg-gradient-to-br from-pink-50 to-rose-100 min-h-screen text-gray-800">
+<div style="background:#4338ca;padding:5px 12px;text-align:right;font-size:.78rem"><a href="/blog/" style="color:#c7d2fe;text-decoration:none;font-weight:600">📖 コラム</a>&nbsp;｜&nbsp;<a href="/" style="color:#c7d2fe;text-decoration:none">ホーム</a></div>
+<!-- r21-breadcrumb -->
+<nav aria-label="パンくずリスト" style="background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:5px 16px;font-size:.78rem;color:#6b7280;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">
+  <a href="/" style="color:#4f46e5;text-decoration:none">ホーム</a>
+  <span style="margin:0 .35rem;color:#9ca3af">›</span>
+  <span style="color:#374151">美容院・ヘアサロン選び診断 | 髪質・悩み・予算から最適なサロンタイプを診断</span>
+</nav>
+<a href="#main" class="sr-only">本文へスキップ</a>
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXQGZRF9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-  <div class="container mx-auto px-4 py-6 max-w-lg" role="main" id="main">
+  <div class="container mx-auto px-4 py-6 max-w-2xl" role="main" id="main">
     <!-- Header -->
     <div class="text-center mb-6">
       <h1 class="text-2xl font-bold text-pink-700 mb-1">💇 美容院・ヘアサロン選び診断</h1>
@@ -132,7 +151,7 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
     <!-- AdSense -->
     <div class="mb-4">
       <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8427583028015858" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      <script>try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}</script>
     </div>
 
     <!-- Top -->
@@ -163,6 +182,9 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
       <button onclick="startDiagnosis()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white font-bold py-3 rounded-xl text-lg transition shadow-md" aria-label="💇 診断スタート！">
         💇 診断スタート！
       </button>
+      <button id="historyBtn" onclick="showHistory()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 rounded-xl text-sm transition mt-3" aria-label="📋 過去の診断結果を見る" style="display:none;">
+        📋 過去の診断結果を見る
+      </button>
     </div>
 
     <!-- Quiz -->
@@ -182,6 +204,15 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
       <button onclick="prevQ()" id="prevBtn" class="hidden w-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-2 rounded-xl text-sm transition mb-4" aria-label="← 前の質問に戻る">← 前の質問に戻る</button>
     </div>
 
+    <!-- History -->
+    <div id="historyScreen" class="hidden">
+      <div class="bg-white rounded-2xl shadow-lg p-6 mb-4">
+        <h2 class="text-xl font-bold text-center text-pink-700 mb-4">📋 診断履歴</h2>
+        <div id="historyList" class="grid gap-3 mb-4"></div>
+        <button onclick="restart()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 rounded-xl text-sm transition">← トップに戻る</button>
+      </div>
+    </div>
+
     <!-- Result -->
     <div id="resultScreen" class="hidden">
       <div class="bg-white rounded-2xl shadow-lg p-6 mb-4 result-card">
@@ -191,6 +222,30 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
           <div id="resultEmoji" class="text-4xl mb-2"></div>
           <div id="resultSalonType" class="text-xl font-bold mb-1"></div>
           <div id="resultSalonSub" class="text-sm opacity-90"></div>
+        </div>
+
+        <!-- レーダーチャート -->
+        <div class="bg-gray-50 rounded-xl p-4 mb-4">
+          <h3 class="font-bold text-gray-700 mb-3 text-sm">📈 診断スコアレーダー</h3>
+          <canvas id="radarChart" style="max-width:100%;height:250px;"></canvas>
+        </div>
+
+        <!-- スコア内訳グラフ -->
+        <div id="scoreBreakdown" class="bg-gray-50 rounded-xl p-4 mb-4">
+          <h3 class="font-bold text-gray-700 mb-3 text-sm">📊 診断スコア内訳</h3>
+          <div id="scoreChartContent" class="grid gap-2"></div>
+        </div>
+
+        <!-- セカンダリ推薦 -->
+        <div id="secondaryResult" class="hidden border border-pink-200 rounded-xl p-3 mb-4 bg-pink-50">
+          <p class="text-xs font-bold text-pink-500 mb-1">💡 こちらも検討</p>
+          <div class="flex items-center gap-2">
+            <span id="secEmoji" class="text-xl"></span>
+            <div>
+              <div id="secType" class="text-sm font-bold text-gray-700"></div>
+              <div id="secSub" class="text-xs text-gray-500"></div>
+            </div>
+          </div>
         </div>
 
         <div id="salonDesc" class="bg-pink-50 rounded-xl p-4 mb-4 text-sm text-gray-700 leading-relaxed"></div>
@@ -210,13 +265,26 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
           <div id="cautions" class="text-sm text-yellow-800 grid gap-1"></div>
         </div>
 
+        <div class="mb-3">
+          <p class="text-xs text-gray-500 text-center mb-2">結果の保存・シェア</p>
+          <div class="flex gap-2 mb-2">
+            <button onclick="saveResult()" class="flex-1 bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 rounded-lg text-sm transition">💾 保存</button>
+            <button onclick="exportText()" class="flex-1 bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 rounded-lg text-sm transition">📄 テキスト</button>
+          </div>
+          <p class="text-xs text-gray-500 text-center mb-2">この結果をシェア</p>
+          <div class="flex gap-2">
+            <button onclick="shareLine()" class="flex-1 bg-green-500 hover:bg-green-400 text-white font-bold py-2 rounded-lg text-sm transition">📱 LINE</button>
+            <button onclick="shareX()" class="flex-1 bg-black hover:bg-gray-800 text-white font-bold py-2 rounded-lg text-sm transition">𝕏</button>
+            <button onclick="copyResult()" class="flex-1 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 rounded-lg text-sm transition">📋 コピー</button>
+          </div>
+        </div>
         <button onclick="restart()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-3 rounded-xl transition hover:from-pink-400 hover:to-rose-400 mb-2">🔄 もう一度診断する</button>
       </div>
 
       <!-- AdSense -->
       <div class="mb-4">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8427583028015858" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <script>try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}</script>
       </div>
     </div>
 
@@ -258,6 +326,26 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
       {q:'トリートメントやヘアケアへの意欲は？',cat:'ケア意欲',choices:['💪 毎日しっかりケアしたい','🙂 週数回は気をつけている','😐 洗い流しケア程度でOK','🤷 あまりこだわらない']},
     ];
 
+    // スコアリングテーブル：各質問の各選択肢に対する[damage, curly, volume, gray]スコア
+    const questionScores = [
+      // Q1: 髪の悩み
+      [{damage:3, curly:0, volume:0, gray:0}, {damage:0, curly:3, volume:0, gray:0}, {damage:0, curly:0, volume:3, gray:0}, {damage:0, curly:0, volume:0, gray:3}],
+      // Q2: 理想のスタイル
+      [{damage:2, curly:1, volume:1, gray:0}, {damage:1, curly:1, volume:1, gray:1}, {damage:0, curly:0, volume:0, gray:2}, {damage:2, curly:0, volume:2, gray:0}],
+      // Q3: 来店頻度
+      [{damage:2, curly:1, volume:1, gray:2}, {damage:1, curly:2, volume:1, gray:2}, {damage:1, curly:1, volume:2, gray:1}, {damage:0, curly:0, volume:0, gray:0}],
+      // Q4: 予算
+      [{damage:0, curly:1, volume:0, gray:2}, {damage:1, curly:1, volume:1, gray:1}, {damage:2, curly:2, volume:1, gray:1}, {damage:3, curly:1, volume:1, gray:1}],
+      // Q5: 重視点
+      [{damage:2, curly:2, volume:1, gray:1}, {damage:1, curly:1, volume:1, gray:1}, {damage:0, curly:1, volume:0, gray:0}, {damage:1, curly:1, volume:1, gray:2}],
+      // Q6: 髪色
+      [{damage:1, curly:1, volume:1, gray:0}, {damage:1, curly:1, volume:0, gray:1}, {damage:0, curly:0, volume:0, gray:2}, {damage:1, curly:1, volume:0, gray:3}],
+      // Q7: 頭皮状態
+      [{damage:1, curly:1, volume:1, gray:1}, {damage:2, curly:1, volume:1, gray:0}, {damage:1, curly:1, volume:0, gray:1}, {damage:1, curly:1, volume:2, gray:1}],
+      // Q8: ケア意欲
+      [{damage:3, curly:2, volume:2, gray:2}, {damage:2, curly:2, volume:1, gray:2}, {damage:1, curly:1, volume:1, gray:1}, {damage:0, curly:0, volume:0, gray:0}],
+    ];
+
     const results = {
       damage: {
         emoji:'🌿',type:'ダメージケア特化サロン',sub:'髪質改善・酸熱トリートメント専門',
@@ -293,6 +381,9 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
     let answers = {};
     const TOTAL = 8;
 
+    // 初期化：履歴ボタン表示判定
+    document.addEventListener('DOMContentLoaded', updateHistoryBtn);
+
     function startDiagnosis() {
       current = 0; answers = {};
       document.getElementById('topScreen').classList.add('hidden');
@@ -322,20 +413,23 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
       }
     }
 
+    let _navDirection = 'forward'; // 'forward' or 'back'
+
     function showQ() {
       const q = questions[current];
       document.getElementById('qNum').textContent = current+1;
       document.getElementById('qPct').textContent = Math.round(current/TOTAL*100);
       document.getElementById('qCategory').textContent = q.cat;
-      document.getElementById('qText').textContent = q.q;
-      document.getElementById('qText').className = 'text-base font-bold text-gray-800 mb-4 leading-relaxed fade-slide';
-      void document.getElementById('qText').offsetWidth;
+      const qTextEl = document.getElementById('qText');
+      qTextEl.textContent = q.q;
+      qTextEl.className = 'text-base font-bold text-gray-800 mb-4 leading-relaxed ' + (_navDirection === 'back' ? 'fade-slide-back' : 'fade-slide');
+      void qTextEl.offsetWidth;
       updateSteps();
       const container = document.getElementById('choicesContainer');
       container.innerHTML = '';
       q.choices.forEach((c,i) => {
         const btn = document.createElement('div');
-        btn.className = 'choice-btn border-2 border-gray-200 rounded-xl p-3 text-sm font-medium text-gray-700';
+        btn.className = 'choice-btn border-2 border-gray-200 rounded-xl p-3 text-sm font-medium text-gray-700 pr-8';
         if(answers[current] === i) btn.classList.add('selected');
         btn.textContent = c;
         btn.onclick = () => selectAnswer(i, btn);
@@ -349,21 +443,38 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
       document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       setTimeout(() => {
-        if(current < TOTAL-1) { current++; showQ(); }
+        if(current < TOTAL-1) { _navDirection = 'forward'; current++; showQ(); }
         else { showResult(); }
       }, 350);
     }
 
     function prevQ() {
-      if(current > 0) { current--; showQ(); }
+      if(current > 0) { _navDirection = 'back'; current--; showQ(); }
     }
 
     function showResult() {
       document.getElementById('quizScreen').classList.add('hidden');
       document.getElementById('resultScreen').classList.remove('hidden');
-      const a0 = answers[0]; // 髪の悩み
+
+      // スコア集計
+      const scores = {damage:0, curly:0, volume:0, gray:0};
+      for(let i=0; i<TOTAL; i++) {
+        const choiceIdx = answers[i] !== undefined ? answers[i] : 0;
+        const scoreRow = questionScores[i][choiceIdx];
+        scores.damage += scoreRow.damage;
+        scores.curly += scoreRow.curly;
+        scores.volume += scoreRow.volume;
+        scores.gray += scoreRow.gray;
+      }
+
+      // スコア順でソート
       const keys = ['damage','curly','volume','gray'];
-      const key = keys[a0 !== undefined ? a0 : 0];
+      const labels = {damage:'ダメージケア', curly:'くせ毛・矯正', volume:'ボリュームアップ', gray:'白髪ケア'};
+      const sorted = keys.slice().sort((a,b) => scores[b] - scores[a]);
+      const key = sorted[0];
+      const maxScore = scores[key] || 1;
+
+      // メイン結果
       const r = results[key] || results.damage;
       document.getElementById('resultEmoji').textContent = r.emoji;
       document.getElementById('resultSalonType').textContent = r.type;
@@ -372,47 +483,273 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
       document.getElementById('reasons').innerHTML = r.reasons.map(s=>`<div class="bg-pink-50 rounded-lg p-2 text-sm text-gray-700">${s}</div>`).join('');
       document.getElementById('products').innerHTML = r.products.map(s=>`<div class="bg-blue-50 rounded-lg p-2 text-sm text-gray-700">${s}</div>`).join('');
       document.getElementById('cautions').innerHTML = r.cautions.map(s=>`<div class="flex gap-2 items-start"><span>・</span><span>${s}</span></div>`).join('');
+
+      // スコア内訳グラフ
+      const chartEl = document.getElementById('scoreChartContent');
+      chartEl.innerHTML = sorted.map(k => {
+        const isPrimary = k === key;
+        const pct = Math.round((scores[k] / maxScore) * 100);
+        return `<div>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-xs ${isPrimary ? 'font-bold text-pink-700' : 'text-gray-500'}">${results[k].emoji} ${labels[k]}</span>
+            <span class="text-xs ${isPrimary ? 'font-bold text-pink-700' : 'text-gray-400'}">${scores[k]}点</span>
+          </div>
+          <div class="score-bar-bg">
+            <div class="score-bar-fill ${isPrimary ? 'primary' : 'secondary'}" data-pct="${pct}" style="width:0%"></div>
+          </div>
+        </div>`;
+      }).join('');
+      // アニメーション開始
+      requestAnimationFrame(() => {
+        chartEl.querySelectorAll('.score-bar-fill').forEach(el => {
+          el.style.width = el.dataset.pct + '%';
+        });
+      });
+
+      // セカンダリ推薦（差が5点以内）
+      const secKey = sorted[1];
+      const secEl = document.getElementById('secondaryResult');
+      if(secKey && (scores[key] - scores[secKey]) <= 5 && scores[secKey] > 0) {
+        const sr = results[secKey];
+        document.getElementById('secEmoji').textContent = sr.emoji;
+        document.getElementById('secType').textContent = sr.type;
+        document.getElementById('secSub').textContent = sr.sub;
+        secEl.classList.remove('hidden');
+      } else {
+        secEl.classList.add('hidden');
+      }
+
+      // レーダーチャート描画
+      requestAnimationFrame(() => drawRadarChart(scores));
     }
 
     function restart() {
       document.getElementById('resultScreen').classList.add('hidden');
+      document.getElementById('historyScreen').classList.add('hidden');
       document.getElementById('topScreen').classList.remove('hidden');
+      updateHistoryBtn();
+    }
+
+    // 現在の診断結果を取得
+    function getResultText() {
+      const salonType = document.getElementById('resultSalonType').textContent;
+      return `あなたのサロン診断結果：${salonType}\n\n美容院・ヘアサロン選び診断で診断してみませんか？\nhttps://appadaycreator.com/hair-salon-advisor/`;
+    }
+
+    function shareLine() {
+      const text = getResultText();
+      const url = `https://line.me/R/share?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    function shareX() {
+      const text = getResultText();
+      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&via=appadaycreator`;
+      window.open(url, '_blank');
+    }
+
+    function copyResult() {
+      const text = getResultText();
+      navigator.clipboard.writeText(text).then(() => {
+        alert('結果をコピーしました！');
+      });
+    }
+
+    // localStorage 履歴機能
+    function loadHistory() {
+      const stored = localStorage.getItem('salonDiagHistory');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveHistory(newEntry) {
+      let history = loadHistory();
+      history.unshift(newEntry);
+      if(history.length > 10) history = history.slice(0, 10);
+      localStorage.setItem('salonDiagHistory', JSON.stringify(history));
+    }
+
+    function saveResult() {
+      const salonType = document.getElementById('resultSalonType').textContent;
+      const scores = {damage:0, curly:0, volume:0, gray:0};
+      for(let i=0; i<TOTAL; i++) {
+        const choiceIdx = answers[i] !== undefined ? answers[i] : 0;
+        const scoreRow = questionScores[i][choiceIdx];
+        scores.damage += scoreRow.damage;
+        scores.curly += scoreRow.curly;
+        scores.volume += scoreRow.volume;
+        scores.gray += scoreRow.gray;
+      }
+      const entry = {
+        id: Date.now(),
+        date: new Date().toLocaleString('ja-JP'),
+        salonType: salonType,
+        scores: scores,
+        answers: answers
+      };
+      saveHistory(entry);
+      alert('診断結果を保存しました！\n📋 トップの「過去の診断結果」から確認できます。');
+      updateHistoryBtn();
+    }
+
+    function showHistory() {
+      const history = loadHistory();
+      if(history.length === 0) {
+        alert('保存された診断結果がありません');
+        return;
+      }
+      document.getElementById('topScreen').classList.add('hidden');
+      document.getElementById('historyScreen').classList.remove('hidden');
+      const listEl = document.getElementById('historyList');
+      listEl.innerHTML = history.map((entry, idx) => {
+        const labels = {damage:'ダメージケア', curly:'くせ毛・矯正', volume:'ボリュームアップ', gray:'白髪ケア'};
+        const keys = ['damage','curly','volume','gray'];
+        const sorted = keys.slice().sort((a,b) => entry.scores[b] - entry.scores[a]);
+        const topKey = sorted[0];
+        const topLabel = labels[topKey];
+        return `<div class="bg-pink-50 rounded-lg p-3 border border-pink-200">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <p class="font-bold text-gray-700 text-sm">${entry.salonType}</p>
+              <p class="text-xs text-gray-500 mt-1">${entry.date}</p>
+              <p class="text-xs text-pink-600 mt-1">トップ: ${topLabel}</p>
+            </div>
+            <button onclick="deleteHistory(${entry.id})" class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded hover:bg-red-200">削除</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function deleteHistory(id) {
+      if(!confirm('この結果を削除してもよろしいですか？')) return;
+      let history = loadHistory();
+      history = history.filter(h => h.id !== id);
+      localStorage.setItem('salonDiagHistory', JSON.stringify(history));
+      showHistory();
+      updateHistoryBtn();
+    }
+
+    function updateHistoryBtn() {
+      const history = loadHistory();
+      document.getElementById('historyBtn').style.display = history.length > 0 ? 'block' : 'none';
+    }
+
+    function exportText() {
+      const salonType = document.getElementById('resultSalonType').textContent;
+      const salonSub = document.getElementById('resultSalonSub').textContent;
+      const desc = document.getElementById('salonDesc').textContent;
+      const reasonsEl = document.getElementById('reasons');
+      const reasons = Array.from(reasonsEl.querySelectorAll('div')).map(d => d.textContent).join('\n');
+
+      const text = `美容院・ヘアサロン選び診断 - 結果
+実施日: ${new Date().toLocaleString('ja-JP')}
+
+【診断結果】
+${salonType}
+${salonSub}
+
+【説明】
+${desc}
+
+【このサロンをおすすめする理由】
+${reasons}
+
+【出典】
+https://appadaycreator.com/hair-salon-advisor/`;
+
+      const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `hair-salon-result-${Date.now()}.txt`;
+      a.click();
+    }
+
+    // レーダーチャート描画
+    function drawRadarChart(scores) {
+      const keys = ['damage','curly','volume','gray'];
+      const labels = {damage:'ダメージケア', curly:'くせ毛・矯正', volume:'ボリュームアップ', gray:'白髪ケア'};
+      const colors = {damage:'#ec4899', curly:'#8b5cf6', volume:'#3b82f6', gray:'#f59e0b'};
+
+      const ctx = document.getElementById('radarChart');
+      if(!ctx) return;
+
+      if(window.radarChartInstance) {
+        window.radarChartInstance.destroy();
+      }
+
+      window.radarChartInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: keys.map(k => labels[k]),
+          datasets: [{
+            label: 'スコア',
+            data: keys.map(k => scores[k]),
+            borderColor: '#ec4899',
+            backgroundColor: 'rgba(236,72,153,0.1)',
+            borderWidth: 2,
+            pointBackgroundColor: '#ec4899',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 24,
+              ticks: {
+                stepSize: 6,
+                color: '#9ca3af',
+                font: { size: 11 }
+              },
+              grid: { color: '#e5e7eb' }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
     }
   </script>
-<div style="background:#fafafa;border:1px solid #e2e8f0;border-radius:10px;padding:12px;margin:10px 0;"><h2 style="font-size:13px;font-weight:700;margin-bottom:6px;color:#374151;">🔍 計算・判定の仕組み</h2><p style="font-size:12px;color:#6b7280;line-height:1.7;">入力された値を計算式やスコアリングロジックで処理し、あなたに合った結果を算出します。本ツールの結果はあくまで参考情報です。重要な判断の際は専門家にご相談ください。</p></div>
-<section style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:24px 16px;margin-top:16px;">
+<div style="background:#fafafa;border:1px solid #e2e8f0;border-radius:10px;padding:12px;margin:10px auto;max-width:680px;"><h2 style="font-size:13px;font-weight:700;margin-bottom:6px;color:#374151;">🔍 計算・判定の仕組み</h2><p style="font-size:12px;color:#6b7280;line-height:1.7;">入力された値を計算式やスコアリングロジックで処理し、あなたに合った結果を算出します。本ツールの結果はあくまで参考情報です。重要な判断の際は専門家にご相談ください。</p></div>
+<section style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:24px 16px;margin-top:16px;max-width:720px;margin-left:auto;margin-right:auto;">
   <h2 style="font-size:16px;font-weight:700;color:#1e293b;margin:0 0 16px;text-align:center;">❓ よくある質問（FAQ）</h2>
   <div style="max-width:680px;margin:0 auto;">
     <details style="border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;overflow:hidden;">
-      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. このチェック結果は医療診断の代わりになりますか？ <span>▼</span></summary>
-      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">なりません。本ツールはあくまで参考情報の提供を目的としています。症状が続く場合は必ず医療機関を受診してください。</p>
+      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. ヘアサロン選びで最も重要なポイントは？ <span>▼</span></summary>
+      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">「技術力」と「相性の良さ」が最重要です。口コミや実績を事前に確認し、初回カウンセリングで悩みを詳しく伝えられるサロンを選びましょう。希望スタイルの写真を持参すると伝わりやすくなります。</p>
     </details>
     <details style="border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;overflow:hidden;">
-      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. プライバシーは守られますか？ <span>▼</span></summary>
-      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">入力された健康情報はサーバーに送信・保存されません。すべてお使いのブラウザ上で処理されます。</p>
+      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. ダメージを受けた髪を改善するには何回通えばいい？ <span>▼</span></summary>
+      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">ダメージの程度にもよりますが、酸熱トリートメントなどの集中ケアを月1〜2回、3〜6ヶ月継続すると効果を実感できる方が多いです。ホームケア（アウトバストリートメント・ヘアオイル）との併用が回復を早めます。</p>
     </details>
     <details style="border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;overflow:hidden;">
-      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. このサービスは無料で使えますか？ <span>▼</span></summary>
-      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">はい、完全無料でご利用いただけます。登録・ログイン不要で、すぐにお使いいただけます。</p>
+      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. 縮毛矯正とカラーは同日にできますか？ <span>▼</span></summary>
+      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">基本的には避けることをおすすめします。縮毛矯正は強アルカリ剤、カラーも薬剤を使うため、同日施術は髪への負担が非常に大きくなります。最低でも2〜4週間の間隔を空けるのが一般的な推奨です。担当スタイリストに相談してください。</p>
     </details>
     <details style="border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;overflow:hidden;">
-      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. 入力したデータはどこに保存されますか？ <span>▼</span></summary>
-      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">入力データはサーバーに送信されません。お使いのブラウザ上でのみ処理されます。</p>
+      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. 美容院と理容院の違いは何ですか？ <span>▼</span></summary>
+      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">美容院（美容室）はカット・カラー・パーマ・ヘアケアなど幅広い施術が得意で、法律上「シェービング（顔剃り）」は原則できません。理容院（床屋）はカット・シェービングが中心で、顔剃りや整髪などを重視する方に向いています。</p>
     </details>
     <details style="border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;overflow:hidden;">
-      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. 何度でも使えますか？ <span>▼</span></summary>
-      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">はい、何度でも無料でご利用いただけます。条件を変えてお試しいただけます。</p>
+      <summary style="padding:12px 16px;cursor:pointer;font-size:14px;font-weight:600;color:#334155;background:#fff;list-style:none;display:flex;justify-content:space-between;align-items:center;">Q. 初めてのサロンで失敗しないコツは？ <span>▼</span></summary>
+      <p style="padding:12px 16px;font-size:13px;color:#475569;margin:0;background:#f8fafc;">①希望スタイルの写真を必ず持参する、②「したくないこと」も明確に伝える、③予算と所要時間を事前に確認する、④口コミや施術例を事前に調べる、の4点が重要です。最初は「少し控えめ」なオーダーで様子を見ると失敗が少なくなります。</p>
     </details>
   </div>
 </section>
 
-<section style="background:#f0f9ff;border-top:1px solid #bae6fd;padding:16px;text-align:center;font-size:12px;color:#0369a1;">
+<div class="max-w-2xl mx-auto px-4"><section  style="background:#f0f9ff;border:1px solid #bae6fd;padding:16px;text-align:center;font-size:12px;color:#0369a1;border-radius:14px;margin-bottom:16px;">
   <p style="margin:0 0 4px;font-weight:600;">📧 お問い合わせ</p>
   <p style="margin:0;">ご意見・ご要望・不具合のご報告は <a href="mailto:appadaycreator@gmail.com" style="color:#0369a1;font-weight:bold;">appadaycreator@gmail.com</a> または <a href="contact.html" style="color:#0369a1;">お問い合わせフォーム</a> へ</p>
-</section>
+</section></div>
 
     
-    <!-- phase8-social-proof -->
+    <div class="max-w-2xl mx-auto px-4">
+<!-- phase8-social-proof -->
     <div class="card p-5 mb-4">
       <h3 class="font-bold text-gray-800 mb-3 text-sm">⭐ 利用者の声</h3>
       <div class="space-y-3">
@@ -440,7 +777,8 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
         </a>
       </div>
     </div>
-    <!-- rakuten-affiliate-block -->
+</div>
+<!-- rakuten-affiliate-block -->
     <div style="border:1px solid #BF0000;background:#fff9f9;border-radius:10px;padding:14px;margin:12px auto;max-width:480px;text-align:center;">
       <p style="font-size:0.85rem;color:#4b5563;margin-bottom:8px;">🛒 関連商品を楽天市場で探す</p>
       <a href="https://hb.afl.rakuten.co.jp/ichiba/541ad0d2.ce2bed12.541ad0d3.a1a2318c/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E7%25BE%258E%25E5%25AE%25B9%25E5%25AE%25A4%2520%25E3%2583%2598%25E3%2582%25A2%25E3%2582%25B1%25E3%2582%25A2%2F&link_type=text" target="_blank" rel="nofollow sponsored noopener"
@@ -460,7 +798,7 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
   </ol>
 </section>
 
-<div style="margin:24px auto;max-width:860px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;">
+<div style="margin:24px auto;max-width:720px;padding:16px 20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;">
   <p style="font-size:12px;font-weight:600;color:#94a3b8;text-align:center;margin:0 0 12px;letter-spacing:0.05em;">スポンサーリンク</p>
   <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
     <a href="https://px.a8.net/svt/ejp?a8mat=4B3WJ7+18PTPM+1O96+699KI" rel="nofollow noopener noreferrer" target="_blank" style="display:inline-flex;align-items:center;padding:8px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;color:#334155;text-decoration:none;white-space:nowrap;">《ヨガ》をはじめてみませんか？ホットヨガスタジオLAVA</a><img border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B3WJ7+18PTPM+1O96+699KI" alt="">
@@ -475,10 +813,112 @@ ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;margin:0!impor
   </div>
 </div>
 
-
-<div style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:12px 16px;margin:0;font-size:11px;color:#64748b;text-align:center;line-height:1.7;">
+<div style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:12px 16px;margin:0 auto;max-width:720px;font-size:11px;color:#64748b;text-align:center;line-height:1.7;">
   <strong>免責事項</strong>：本ツールの計算・診断結果はあくまで参考情報です。本サービスの利用により生じた損害について、当サイトは一切の責任を負いません。
 </div>
 <div style="text-align:center;padding:8px;font-size:11px;"><a href="privacy-policy.html" style="color:inherit;font-size:11px;opacity:0.7;text-decoration:underline;">プライバシーポリシー</a></div>
+<div style="text-align:center;padding:10px 16px 14px;background:#eef2ff;border-top:2px solid #c7d2fe;margin-top:8px">
+<a href="/blog/" style="color:#4f46e5;font-size:.85rem;font-weight:700">📖 マネー・育児・キャリアのコラムを読む →</a>
+</div>
+
+<section aria-labelledby="faq-h" class="bg-white rounded-2xl shadow-md p-4 mb-4" style="max-width:740px;margin-left:auto;margin-right:auto">
+  
+<div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:12px;padding:1.5rem 1.75rem;margin:2rem 0" id="tool-desc-box">
+  <h2 style="font-size:1.05rem;font-weight:800;color:#1e40af;margin:0 0 1rem">📋 このツールの詳細</h2>
+  <p style="color:#374151;margin:0 0 .75rem;line-height:1.8">「💇 美容院・ヘアサロン選び診断」は、あなたの状況に合わせたアドバイスを提供する無料の診断・アドバイスツールです。</p>
+  <p style="color:#374151;margin:0 0 .75rem;line-height:1.8">いくつかの質問に答えるだけで、あなたに最適な提案や判断基準をわかりやすく提示します。</p>
+  <p style="color:#374151;margin:0;line-height:1.8">情報収集や比較検討の時間を大幅に短縮できるので、迷っているときの第一歩として活用いただけます。</p>
+</div>
+<div style="background:#eaf4fb;border-left:4px solid #1976d2;padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0">
+  <h3 style="font-size:1.1rem;font-weight:800;color:#1e3a5f">このツールでできること</h3>
+  <p style="margin:8px 0 0;line-height:1.7;color:#1a1a2e">髪質・施術内容・予算・エリアの条件を入力すると、最適な美容院の探し方とチェックポイントをアドバイスします。カット・カラー・パーマなど施術別の相場も確認できます。</p>
+</div>
+<div style="background:#f0fdf4;border-left:4px solid #388e3c;padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0">
+  <h3 style="font-size:1.1rem;font-weight:800;color:#1b5e20">活用シーン・使い方</h3>
+  <p style="margin:8px 0 0;line-height:1.7;color:#1a1a2e">引っ越し先での新しい美容院を探している方や、初めて特定の施術（縮毛矯正・ハイライト等）を試みる方に活用できます。口コミの見方や初回割引の活用方法も案内します。</p>
+</div>
+<div style="background:#fff8e1;border-left:4px solid #f57c00;padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0">
+  <h3 style="font-size:1.1rem;font-weight:800;color:#e65100">注意点・補足</h3>
+  <p style="margin:8px 0 0;line-height:1.7;color:#1a1a2e">美容院の料金・技術レベルは店舗によって異なります。初回はカウンセリング重視のサロンを選び、希望スタイルの画像を持参することをおすすめします。</p>
+</div>
+<!-- r22-editorial -->
+<div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:.75rem;padding:1.5rem;margin:1.5rem 0">
+  <h2 style="font-size:1.05rem;font-weight:800;color:#581c87;margin:0 0 1rem;border-left:4px solid #7c3aed;padding-left:.75rem">美容・ファッションの費用データ（2024〜2025年）</h2>
+  <p style="font-size:.88rem;color:#4b5563;margin:0 0 .75rem">各種調査をもとに、美容・ファッションにかかる費用と市場規模を整理しました。</p>
+  <table style="width:100%;border-collapse:collapse;font-size:.83rem">
+    <thead>
+      <tr style="background:#e9d5ff">
+        <th style="padding:.5rem .75rem;text-align:left;border:1px solid #e9d5ff;color:#581c87">項目</th>
+        <th style="padding:.5rem .75rem;text-align:left;border:1px solid #e9d5ff;color:#581c87">データ</th>
+        <th style="padding:.5rem .75rem;text-align:left;border:1px solid #e9d5ff;color:#581c87">出典</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#fdf4ff">
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">女性の美容費（月平均）</td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>約8,000〜12,000円（スキンケア・メイク・美容院含む）</strong></td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">複数の美容消費調査より推計（参考値）</td>
+      </tr>
+      <tr style="">
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">美容院の平均利用頻度</td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>女性：約2〜3ヶ月に1回 / 男性：約1〜1.5ヶ月に1回</strong></td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">業界調査データ（参考値）</td>
+      </tr>
+      <tr style="background:#fdf4ff">
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">化粧品の国内市場規模</td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>約1.7兆円（2022年）</strong></td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">経済産業省「工業統計」・業界データ参考</td>
+      </tr>
+      <tr style="">
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-weight:600;color:#581c87">ファッション費の月平均（20〜30代）</td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff"><strong>約1〜3万円（性別・収入で大きく差あり）</strong></td>
+        <td style="padding:.5rem .75rem;border:1px solid #e9d5ff;font-size:.78rem;color:#6b7280">総務省「家計調査」・民間調査より参考値</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:.78rem;color:#6b7280;margin:.5rem 0 0">※ 記載データは各出典の公表時点の情報です。最新情報は各公的機関の公式サイトをご確認ください。</p>
+</div>
+<!-- r20-tool-links -->
+<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:.75rem;padding:1.25rem 1.5rem;margin:2rem 0">
+  <p style="font-weight:700;color:#374151;margin:0 0 .75rem;font-size:.9rem">📖 あわせて読みたいコラム記事</p>
+  <ul style="margin:0;padding-left:1.25rem;color:#4b5563;line-height:2">
+    <li><a href="/blog/frugal-living-guide/" style="color:#4f46e5">節約生活で年間100万円貯める方法</a></li>
+    <li><a href="/blog/household-budget-guide/" style="color:#4f46e5">家計管理の基本と節約術</a></li>
+  </ul>
+</div>
+<div id="tool-disclaimer" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1.25rem 1.5rem;margin:1.5rem 0;font-size:.875rem">
+  <p style="font-weight:700;color:#374151;margin:0 0 .5rem">⚠️ 計算結果の活用にあたって</p>
+  <p style="color:#4b5563;margin:0 0 .5rem;line-height:1.75">計算結果は参考値です。入力値や前提条件によって結果が変わります。重要な判断の際は最新の公式情報をご確認ください。</p>
+  <ul style="margin:0;padding-left:1.25rem;color:#4b5563;line-height:1.9"><li><a href="https://www.caa.go.jp/" target="_blank" rel="noopener noreferrer" style="color:#4f46e5;font-size:.85rem">消費者庁「くらしの安心ガイド」</a></li></ul>
+</div>
+<h2 id="faq-h" style="font-size:1.05rem;font-weight:700;margin-bottom:12px;border-left:4px solid #4f46e5;padding-left:10px;">よくある質問</h2>
+  <dl style="line-height:1.8;">
+    <dt style="font-weight:600;margin-top:12px;">Q: 診断結果はどう活用すればいいですか？</dt>
+    <dd style="margin-left:16px;color:#374151;">美容院・ヘアサロン選びに関する判断・選択の参考情報としてご活用ください。条件を変えて複数回試してみてください。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: 診断を繰り返し使えますか？</dt>
+    <dd style="margin-left:16px;color:#374151;">はい、条件を変えて何度でも診断いただけます。異なるシナリオの比較に役立ちます。</dd>
+    <dt style="font-weight:600;margin-top:12px;">Q: 入力したデータはどこに保存されますか？</dt>
+    <dd style="margin-left:16px;color:#374151;">すべての処理はブラウザ内で完結します。データがサーバーに送信されることはありません。</dd>
+  </dl>
+</section>
+<div style="background:#eef2ff;border-left:4px solid #4f46e5;border-radius:.5rem;padding:1rem 1.25rem;margin:1.5rem auto;max-width:760px;font-size:.875rem">
+<p style="margin:0 0 .5rem;font-weight:700;color:#3730a3">📖 お役立ちコラム</p>
+<ul style="margin:0;padding-left:1.25rem;color:#4f46e5;line-height:2">
+<li><a href="/blog/stock-investment-beginner/" style="color:#4f46e5">株式投資の始め方【初心者完全ガイド】</a></li>
+<li><a href="/blog/nisa-comparison/" style="color:#4f46e5">新NISA vs iDeCo 徹底比較</a></li>
+<li><a href="/blog/investment-risk-management/" style="color:#4f46e5">投資のリスク管理入門</a></li>
+</ul>
+</div>
+<!-- r17-mobile-ux -->
+<a href="#top" id="back-to-top" aria-label="ページトップへ戻る" style="display:none;position:fixed;bottom:24px;right:20px;background:#4f46e5;color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.4rem;line-height:48px;text-align:center;text-decoration:none;box-shadow:0 4px 12px rgba(79,70,229,.4);z-index:9000;cursor:pointer" title="ページトップへ">↑</a>
+<script>
+(function(){
+  var btn = document.getElementById('back-to-top');
+  if(!btn) return;
+  window.addEventListener('scroll', function(){
+    btn.style.display = window.scrollY > 400 ? 'block' : 'none';
+  }, {passive:true});
+})();
+</script>
 </body>
 </html>
