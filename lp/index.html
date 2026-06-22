@@ -61,7 +61,16 @@ a{text-decoration:none;color:inherit}
 .menu-tg{display:none}
 
 /* Hero */
-.hero{background:linear-gradient(180deg,#FFF6FA 0%,#FFFFFF 100%);padding:46px 0 30px;overflow:hidden}
+.hero{position:relative;background:linear-gradient(180deg,#FFF6FA 0%,#FFFFFF 100%);padding:46px 0 30px;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-80px;right:-60px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(236,72,153,.14),transparent 70%);z-index:0;pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:-40px;left:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(251,207,232,.5),transparent 70%);z-index:0;pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero-deco{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.hero-deco span{position:absolute;display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--line);border-radius:14px;width:46px;height:46px;font-size:22px;box-shadow:0 8px 20px rgba(180,120,150,.16);opacity:.9}
+.hero-deco .d1{left:3%;top:24%;transform:rotate(-8deg)}
+.hero-deco .d2{left:8%;bottom:20%;transform:rotate(7deg);width:40px;height:40px;font-size:19px}
+.hero-deco .d3{right:4%;top:60%;transform:rotate(9deg)}
+.hero-deco .d4{right:46%;top:6%;transform:rotate(-6deg);width:38px;height:38px;font-size:17px}
 .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center}
 .hero h1{font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.22;color:#3F3A3D;letter-spacing:.01em}
 .hero h1 .pk{color:var(--pink-d)}
@@ -96,8 +105,26 @@ a{text-decoration:none;color:inherit}
 .trust-in .it{display:flex;align-items:center;gap:7px}
 
 /* generic section */
-section{padding:54px 0}
+section{padding:50px 0}
 .bg-soft{background:var(--bg-soft)}
+
+/* stats band */
+.stats{background:linear-gradient(135deg,#FFF4F9,#FDECF4);padding:34px 0;border-bottom:1px solid var(--line)}
+.stats-in{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 18px;box-shadow:0 8px 22px rgba(180,120,150,.1)}
+.stat-card .lab{font-size:12px;font-weight:700;color:var(--gray-d);display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.stat-card .lab img{width:18px;height:18px}
+.stat-card .num{font-size:30px;font-weight:900;color:var(--pink-d);line-height:1.1}
+.stat-card .num span{font-size:15px;color:var(--gray-l);margin-left:2px}
+.stat-card .mbars{display:flex;align-items:flex-end;gap:4px;height:34px;margin-top:12px}
+.stat-card .mbars i{flex:1;background:linear-gradient(180deg,var(--pink-l),var(--pink));border-radius:4px 4px 0 0;display:block}
+.stat-card .donut{margin-top:10px;display:flex;align-items:center;gap:10px}
+.stat-card .donut svg{flex:none}
+.stat-card .donut .leg{font-size:11px;color:var(--ink-2);line-height:1.5}
+.stat-card .spark{margin-top:12px}
+
+@media(max-width:900px){.stats-in{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.stats-in{grid-template-columns:1fr 1fr}}
 
 /* worries */
 .worry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
@@ -260,6 +287,9 @@ section{padding:54px 0}
 
 <!-- Hero -->
 <section class="hero">
+  <div class="hero-deco" aria-hidden="true">
+    <span class="d1">💇</span><span class="d2">✨</span><span class="d3">💗</span><span class="d4">🌿</span>
+  </div>
   <div class="wrap hero-grid">
     <div>
       <span class="sec-tag">💇 美容院・ヘアサロン選び診断</span>
@@ -313,6 +343,38 @@ section{padding:54px 0}
     <div class="it"><img class="ico" src="../assets/icons/split/04-04.png" alt="">累計10万件診断</div>
   </div>
 </div>
+
+<!-- stats / data -->
+<section class="stats">
+  <div class="wrap stats-in">
+    <div class="stat-card">
+      <div class="lab"><img src="../assets/icons/split/04-04.png" alt="">累計診断数</div>
+      <div class="num">10<span>万件+</span></div>
+      <div class="mbars" aria-hidden="true"><i style="height:38%"></i><i style="height:52%"></i><i style="height:60%"></i><i style="height:74%"></i><i style="height:88%"></i><i style="height:100%"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="lab"><img src="../assets/icons/split/02-02.png" alt="">診断満足度</div>
+      <div class="num">96<span>%</span></div>
+      <div class="donut">
+        <svg width="56" height="56" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#F3EAEE" stroke-width="4"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="#EC4899" stroke-width="4" stroke-dasharray="96 100" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+        <div class="leg">「合うサロンが<br>分かった」と回答</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="lab"><img src="../assets/icons/split/02-06.png" alt="">平均診断時間</div>
+      <div class="num">約3<span>分</span></div>
+      <div class="mbars" aria-hidden="true"><i style="height:100%"></i><i style="height:70%"></i><i style="height:48%"></i><i style="height:34%"></i><i style="height:24%"></i><i style="height:18%"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="lab"><img src="../assets/icons/split/03-05.png" alt="">再来店率の改善</div>
+      <div class="num">+38<span>%</span></div>
+      <div class="donut">
+        <svg width="56" height="56" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#F3EAEE" stroke-width="4"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="#DB2777" stroke-width="4" stroke-dasharray="38 100" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+        <div class="leg">診断利用者の<br>サロン定着率</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- worries -->
 <section id="worry" class="bg-soft">
